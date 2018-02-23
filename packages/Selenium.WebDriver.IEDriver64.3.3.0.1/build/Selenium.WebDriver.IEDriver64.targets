@@ -1,0 +1,54 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IEDriver64SrcPath>$(MSBuildThisFileDirectory)..\driver\IEDriverServer64.exe</IEDriver64SrcPath>
+    <IEDriver64TargetPath Condition=" '$(IEDriver64TargetPath)' == '' ">$(TargetDir)</IEDriver64TargetPath>
+  </PropertyGroup>
+  <!-- Detect is project type Web or Not. -->
+  <Choose>
+    <When Condition="'$(ProjectTypeIsWeb)' == ''">
+      <PropertyGroup>
+        <!-- Reference: http://www.mztools.com/Articles/2008/MZ2008017.aspx -->
+        <!-- HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\VisualStudio\14.0\Projects -->
+        <ProjectTypeIsWeb Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(ProjectTypeGuids),'^(.*;)*{349c5851-65df-11da-9384-00065b846f21}(;.*)*$'))">true</ProjectTypeIsWeb>
+        <ProjectTypeIsWeb Condition="'$(ProjectTypeIsWeb)' == ''">false</ProjectTypeIsWeb>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <!-- Detect definition of compilation symbol that is "_PUBLISH_IEDRIVER64", or "PublishIEDriver64" msbuild property. -->
+  <Choose>
+    <When Condition="'$(PublishIEDriver64)' == ''">
+      <PropertyGroup>
+        <PublishIEDriver64 Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(DefineConstants),'^(.*;)*_PUBLISH_IEDRIVER64(;.*)*$'))">true</PublishIEDriver64>
+        <PublishIEDriver64 Condition="'$(PublishIEDriver64)' == ''">false</PublishIEDriver64>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <!-- Setup driver file as project item if publishing driver file is enabled. -->
+  <Choose>
+    <When Condition="'$(PublishIEDriver64)|$(ProjectTypeIsWeb)' == 'true|true'">
+      <ItemGroup>
+        <None Include="$(IEDriver64SrcPath)">
+          <Link>IEDriverServer64.exe</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Visible>False</Visible>
+        </None>
+      </ItemGroup>
+    </When>
+    <When Condition="'$(PublishIEDriver64)|$(ProjectTypeIsWeb)' == 'true|false'">
+      <ItemGroup>
+        <Content Include="$(IEDriver64SrcPath)">
+          <Link>IEDriverServer64.exe</Link>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <Visible>False</Visible>
+        </Content>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <!-- If publishing driver file is disabled (it's default behavior), define "copy" and "clean" build task. -->
+  <Target Name="CopyIEDriver64ToBin" BeforeTargets="AfterBuild" Condition="'$(PublishIEDriver64)' == 'false'">
+    <Copy SourceFiles="$(IEDriver64SrcPath)" DestinationFiles="$(IEDriver64TargetPath)IEDriverServer64.exe" SkipUnchangedFiles="true"></Copy>
+  </Target>
+  <Target Name="DeleteIEDriver64FromBin" BeforeTargets="AfterClean" Condition="'$(PublishIEDriver64)' == 'false'">
+    <Delete Files="$(IEDriver64TargetPath)IEDriverServer64.exe"></Delete>
+  </Target>
+</Project>
