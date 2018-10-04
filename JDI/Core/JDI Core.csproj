@@ -197,15 +197,6 @@
       <HintPath>..\..\packages\Selenium.Support.3.7.0\lib\net45\WebDriver.Support.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Mono.Cecil.dll" />
-    <Content Include="Mono.Cecil.Mdb.dll" />
-    <Content Include="Mono.Cecil.Pdb.dll" />
-    <Content Include="Mono.Cecil.Rocks.dll" />
-    <Content Include="nunit.engine.api.dll" />
-    <Content Include="nunit.engine.dll" />
-    <Content Include="NUnit3.TestAdapter.dll" />
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -187,20 +187,13 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="JDI Web.nuspec" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Mono.Cecil.dll" />
-    <Content Include="Mono.Cecil.Mdb.dll" />
-    <Content Include="Mono.Cecil.Pdb.dll" />
-    <Content Include="Mono.Cecil.Rocks.dll" />
-    <Content Include="nunit.engine.api.dll" />
-    <Content Include="nunit.engine.dll" />
-    <Content Include="NUnit3.TestAdapter.dll" />
   </ItemGroup>
   <ItemGroup />
   <Choose>
