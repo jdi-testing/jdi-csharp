@@ -147,7 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="JDI Commons, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\JDI.UICommons.1.0.61\lib\net452\JDI Commons.dll</HintPath>
+      <HintPath>..\Commons\JDI Commons\bin\Debug\JDI Commons.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
