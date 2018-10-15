@@ -1,4 +1,6 @@
 -
+  image: Visual Studio 2017
+  
   branches:
     only:
     - nuget
@@ -29,6 +31,8 @@
       - '**\*Tests.dll'
         
 -
+  image: Visual Studio 2017
+  
   before_build:
     - nuget restore "JDI UI Framework.sln"
 
