@@ -41,15 +41,6 @@
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
     </Reference>
-    <Reference Include="JDI Commons, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Commons\JDI Commons\bin\Debug\JDI Commons.dll</HintPath>
-    </Reference>
-    <Reference Include="JDI Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Core\bin\Debug\JDI Core.dll</HintPath>
-    </Reference>
-    <Reference Include="JDI Matchers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Matchers\JDI Matchers\bin\Debug\JDI Matchers.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -195,7 +186,20 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Commons\JDI Commons\JDI Commons.csproj">
+      <Project>{c749644d-5901-4fd6-9add-06209bdc1cd2}</Project>
+      <Name>JDI Commons</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\JDI Core.csproj">
+      <Project>{99ee5894-9f49-43e2-a129-7916d924d49c}</Project>
+      <Name>JDI Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Matchers\JDI Matchers\JDI Matchers.csproj">
+      <Project>{822c29a7-c835-40ef-9e83-ae5388be9a1c}</Project>
+      <Name>JDI Matchers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
