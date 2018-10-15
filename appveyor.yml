@@ -1,0 +1,40 @@
+-
+  branches:
+    only:
+    - nuget
+    
+  before_build:
+    - nuget restore "JDI UI Framework.sln"
+
+  build_script: 
+    - msbuild "JDI UI Framework.sln" /p:Configuration=Release /t:Rebuild
+
+  after_build:
+    - nuget pack "JDI/Web/JDI Web/JDI Web.csproj" -Prop Configuration=Release
+
+  artifacts:
+    - path: '*.nupkg'
+      name: nupkg
+
+  deploy:
+    provider: NuGet
+    server: 
+    api_key:
+      secure: <ADD_HERE_BEFORE_PUBLISH>
+    skip_symbols: false
+    artifact: nupkg
+ 
+  test:
+    assemblies:
+      - '**\*Tests.dll'
+        
+-
+  before_build:
+    - nuget restore "JDI UI Framework.sln"
+
+  build_script: 
+    - msbuild "JDI UI Framework.sln" /p:Configuration=Release /t:Rebuild
+
+  test:
+    assemblies:
+      - '**\*Tests.dll'
