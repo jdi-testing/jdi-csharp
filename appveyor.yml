@@ -41,4 +41,4 @@
 
   test:
     assemblies:
-      - '**\*Tests.dll'
+      - '**\*SomeTests.dll'
