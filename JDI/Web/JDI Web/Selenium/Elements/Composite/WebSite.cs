@@ -4,6 +4,7 @@ using JDI_Web.Selenium.Base;
 using JDI_Web.Selenium.DriverFactory;
 using JDI_Web.Settings;
 using OpenQA.Selenium;
+using static JDI_Web.Settings.WebSettings;
 
 namespace JDI_Web.Selenium.Elements.Composite
 {
@@ -15,10 +16,15 @@ namespace JDI_Web.Selenium.Elements.Composite
         public string Title => WebDriver.Title;
         private static WebCascadeInit CascadeInit => new WebCascadeInit();
 
-        public static void Init(Type siteType)
+        public static void Init(Type siteType, string domain = null, Func<IWebDriver> driver = null)
         {
             CascadeInit.InitStaticPages(siteType, WebSettings.WebDriverFactory.CurrentDriverName);
             CurrentSite = siteType;
+            if (domain != null)
+                Domain = domain;
+            if (driver != null)
+                UseDriver(driver);
+            InitFromProperties();
         }
 
         public static T Init<T>(Type siteType, string driverName) where T : Application
@@ -28,7 +34,7 @@ namespace JDI_Web.Selenium.Elements.Composite
 
         public static T Init<T>(Type siteType, DriverTypes driverType = DriverTypes.Chrome) where T : Application
         {
-            return Init<T>(siteType, WebSettings.UseDriver(driverType));
+            return Init<T>(siteType, UseDriver(driverType));
         }
 
         public T Init<T>(string driverName) where T : Application
@@ -39,7 +45,7 @@ namespace JDI_Web.Selenium.Elements.Composite
 
         public T Init<T>(DriverTypes driverType = DriverTypes.Chrome) where T : Application
         {
-            DriverName = WebSettings.UseDriver(driverType);
+            DriverName = UseDriver(driverType);
             return Init<T>(DriverName);
         }
 
@@ -50,7 +56,7 @@ namespace JDI_Web.Selenium.Elements.Composite
 
         public static void Open()
         {
-            WebSettings.WebDriver.Navigate().GoToUrl(WebSettings.Domain);
+            WebSettings.WebDriver.Navigate().GoToUrl(Domain);
         }
 
         public void OpenUrl(string url)

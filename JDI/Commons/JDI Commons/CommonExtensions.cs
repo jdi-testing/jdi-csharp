@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace JDI_Commons
 {
@@ -28,6 +29,11 @@ namespace JDI_Commons
             return index > 0
                 ? str.Substring(0, index)
                 : str;
+        }
+
+        public static bool Matches(this string text, string regEx)
+        {
+            return Regex.Match(text, regEx).Success;
         }
 
         public static string Print(this IEnumerable<string> list, string separator = ", ", string format = "{0}")

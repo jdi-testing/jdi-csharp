@@ -10,7 +10,6 @@ using JDI_Web.Selenium.Elements.Base;
 using JDI_Web.Selenium.Elements.Common;
 using JDI_Web.Selenium.Elements.Complex.Table.Interfaces;
 using OpenQA.Selenium;
-using RestSharp.Extensions;
 using static Epam.JDI.Core.Settings.JDISettings;
 using static JDI_Web.Selenium.Elements.Complex.Table.Column;
 using static JDI_Web.Selenium.Elements.Complex.Table.Row;
@@ -304,8 +303,8 @@ namespace JDI_Web.Selenium.Elements.Complex.Table
 
         public ICell Cell(Column column, Row row)
         {
-            int colIndex = column.Get(GetColumnIndex, num => num + Columns.StartIndex - 1);
-            int rowIndex = (int) row.Get(GetRowIndex, num => num + Rows.StartIndex - 1);
+            var colIndex = column.Get(GetColumnIndex, num => num + Columns.StartIndex - 1);
+            var rowIndex = (int) row.Get(GetRowIndex, num => num + Rows.StartIndex - 1);
             return AddCell(colIndex, rowIndex, column.Get(name => Columns.Headers.IndexOf(name) + 1, num => num), row.Get(name => Rows.Headers.IndexOf(name) + 1, num => num), column.Get(name => name, num => ""), row.Get(name => name, num => ""));
         }
 

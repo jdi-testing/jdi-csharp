@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using JDI_Commons;
 using Epam.JDI.Core.Attributes;
-using RestSharp.Extensions;
 using static Epam.JDI.Core.ExceptionUtils;
 
 namespace JDI_Web.Utils

@@ -84,7 +84,7 @@ namespace JDI_UIWebTests.Tests.Complex.Table
         {
             var rows = Table.GetRows("Plans=MSTest, NUnit, Epam");
             new Check("Rows count").AreEquals(rows.Count, 2);
-            string stringRow =
+            var stringRow =
                 rows.Select(
                     pair => $"{pair.Key}:[{pair.Value.Select(pair2 => $"{pair2.Key}:{pair2.Value.GetText}").Print()}]")
                     .Print();
@@ -99,7 +99,7 @@ namespace JDI_UIWebTests.Tests.Complex.Table
         {
             var rows = Table.GetRows("Plans=MSTest, NUnit, Epam", "Type=Asserter");
             new Check("Rows count").AreEquals(rows.Count, 1);
-            string stringRow =
+            var stringRow =
                 rows.Select(
                     pair => $"{pair.Key}:[{pair.Value.Select(pair2 => $"{pair2.Key}:{pair2.Value.GetText}").Print()}]")
                     .Print();
@@ -113,7 +113,7 @@ namespace JDI_UIWebTests.Tests.Complex.Table
         {
             var columns = Table.GetColumns("1=Selenium, Custom");
             new Check().AreEquals(columns.Count, 1);
-            string stringColumns =
+            var stringColumns =
                 columns.Select(
                     pair => $"{pair.Key}:[{pair.Value.Select(pair2 => $"{pair2.Key}:{pair2.Value.GetText}").Print()}]")
                     .Print();
@@ -132,7 +132,7 @@ namespace JDI_UIWebTests.Tests.Complex.Table
         {
             var columns = Table.GetColumns("2=Test Runner", "4=Logger");
             new Check().AreEquals(columns.Count, 1);
-            string stringColumns =
+            var stringColumns =
                 columns.Select(
                     pair => $"{pair.Key}:[{pair.Value.Select(pair2 => $"{pair2.Key}:{pair2.Value.GetText}").Print()}]")
                     .Print();
@@ -151,7 +151,7 @@ namespace JDI_UIWebTests.Tests.Complex.Table
         {
             var columns = Table.Columns.Get();
             new Check("Columns count").AreEquals(columns.Count, 3);
-            string stringColumns = columns.Select(
+            var stringColumns = columns.Select(
                 pair => $"{pair.Key}:[{pair.Value.Select(pair2 => $"{pair2.Key}:{pair2.Value.GetText}").Print()}]")
                 .Print();
             new Check("Columns content").AreEquals(
@@ -181,7 +181,7 @@ namespace JDI_UIWebTests.Tests.Complex.Table
         {
             var columns = Table.Columns.AsText;
             new Check("Columns count").AreEquals(columns.Count, 3);
-            string stringColumns = columns.Select(
+            var stringColumns = columns.Select(
                 pair => $"{pair.Key}:[{pair.Value.Select(pair2 => $"{pair2.Key}:{pair2.Value}").Print()}]")
                 .Print();
             new Check("Columns content").AreEquals(

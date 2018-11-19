@@ -35,7 +35,7 @@ namespace JDI_UIWebTests.Tests.Complex
             IList<IWebElement> inputElems = HomePage.WebDriver.FindElements(By.CssSelector("#elements-checklist input"));
             IList<IWebElement> labelsElems = HomePage.WebDriver.FindElements(By.CssSelector(".checkbox>label"));
 
-            for (int i = 0; i < inputElems.Count; i++)
+            for (var i = 0; i < inputElems.Count; i++)
             {
                 if ((inputElems[i].GetAttribute("checked") != null) && (inputElems[i].GetAttribute("checked") == "true"))
                 {
@@ -48,7 +48,7 @@ namespace JDI_UIWebTests.Tests.Complex
             //TO_DO: replace with TextList.Texts when will be fixed
             //var texts = ActionsLog.Texts; 
             IList<string> log = HomePage.WebDriver.FindElements(By.CssSelector(".logs li")).Select(e => e.Text).ToList();            
-            for (int i = 0; i < log.Count; i++)
+            for (var i = 0; i < log.Count; i++)
             {
                 JDI_Matchers.NUnit.Assert.Contains(log[i], logLines[i] + ": condition changed to true");
             }            
@@ -91,7 +91,7 @@ namespace JDI_UIWebTests.Tests.Complex
         {
             _nature().Select("Water", "Fire");
             CheckAction("Fire: condition changed to true");            
-            string asd = ActionsLog.TextElements.First().Value;
+            var asd = ActionsLog.TextElements.First().Value;
             _cheсkAllLogMessages(new List<string>() { "Fire", "Water" });
         }
 

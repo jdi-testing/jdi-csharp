@@ -1,6 +1,4 @@
 ﻿using System;
-using RestSharp;
-
 using Epam.JDI.Core.Logging;
 using Epam.JDI.Core.Settings;
 
@@ -38,7 +36,7 @@ namespace JDI_Core.Preconditions
         {
             try
             {
-                bool temp = alwaysMoveToCondition;
+                var temp = alwaysMoveToCondition;
                 alwaysMoveToCondition = true;
                 IsInState(condition, method);
                 alwaysMoveToCondition = temp;

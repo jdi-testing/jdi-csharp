@@ -37,7 +37,7 @@ namespace JDIWebTests.UIObjects.Sections
 
         public List<string> GetFormValue()
         {
-            List<string> fields = new List<string>();
+            var fields = new List<string>();
             fields.Add(NameField.GetText);
             fields.Add(LastNameField.GetText);
             fields.Add(DescriptionField.GetText);

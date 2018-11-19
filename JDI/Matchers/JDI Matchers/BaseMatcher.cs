@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Epam.JDI.Core.Logging;
 using JDI_Commons;
-using RestSharp.Extensions;
 
 namespace JDI_Matchers
 {
@@ -62,7 +61,7 @@ namespace JDI_Matchers
 
         public void Contains(string actual, string expected, bool logOnlyFail, string failMessage)
         {
-            bool result = _ignoreCase
+            var result = _ignoreCase
                 ? actual.Contains(expected, StringComparison.OrdinalIgnoreCase)
                 : actual.Contains(expected);
             AssertAction($"Check that '{actual}' contains '{expected}'", result, logOnlyFail);
@@ -93,7 +92,7 @@ namespace JDI_Matchers
             _logger.Info(message);
             // TODO: Take screenshot
             //TakeScreenshot();
-            bool result = new Timer(_waitTimeout * 1000).GetResultByCondition(resultFunc, r => r);
+            var result = new Timer(_waitTimeout * 1000).GetResultByCondition(resultFunc, r => r);
             if (!result)
             {
                 //TakeScreenshot();
@@ -103,7 +102,7 @@ namespace JDI_Matchers
 
         private void AssertException(string failMessage, params object[] args)
         {
-            string failMsg = args.Length > 0 ? string.Format(failMessage, args) : failMessage;
+            var failMsg = args.Length > 0 ? string.Format(failMessage, args) : failMessage;
             _logger.Error(failMsg);
             ThrowFail(failMsg);
         }
@@ -207,7 +206,7 @@ namespace JDI_Matchers
         {
             var first = actual as T[] ?? actual.ToArray();
             var second = expected as T[] ?? expected.ToArray();
-            bool result = first.OrderBy(i => i).SequenceEqual(second.OrderBy(i => i));
+            var result = first.OrderBy(i => i).SequenceEqual(second.OrderBy(i => i));
             AssertAction($"Check that collection '{string.Join(", ", first)}' equals to '{string.Join(", ", second)}'", result);
         }
         public ListChecker<T> Each<T>(IEnumerable<T> collection)
@@ -295,7 +294,7 @@ namespace JDI_Matchers
 
             public void AreDifferent()
             {
-                bool result = _list.Distinct().Count() == _list.Count();
+                var result = _list.Distinct().Count() == _list.Count();
                 _matcher.AssertAction($"Check that all items of list '{string.Join(", ", _list)}' are different", result);
             }
 
@@ -309,14 +308,14 @@ namespace JDI_Matchers
             public void IsSortedByDesc()
             {
                 var descSortedList = _list.OrderByDescending(e => e);
-                bool result = descSortedList.SequenceEqual(_list);
+                var result = descSortedList.SequenceEqual(_list);
                 _matcher.AssertAction($"Check that collection '{string.Join(", ", _list)}' ordered by descending", result);
             }
 
             public void IsSortedByAsc()
             {
                 var ascSortedList = _list.OrderBy(e => e);
-                bool result = ascSortedList.SequenceEqual(_list);
+                var result = ascSortedList.SequenceEqual(_list);
                 _matcher.AssertAction($"Check that collection '{string.Join(", ", _list)}' ordered by ascending", result);
             }
         }

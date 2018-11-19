@@ -34,8 +34,8 @@ namespace JDI_UIWebTests.Tests.Common
         [Test]
         public void SetAttributeTest()
         {
-            string _attributeName = "testAttr";
-            string _value = "testValue";
+            var _attributeName = "testAttr";
+            var _value = "testValue";
             _logoImage.SetAttribute(_attributeName, _value);
             new Check().AreEquals(_logoImage.GetAttribute(_attributeName), _value);                
         }

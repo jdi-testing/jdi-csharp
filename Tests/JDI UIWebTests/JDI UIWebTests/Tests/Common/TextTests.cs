@@ -69,8 +69,8 @@ namespace JDI_UIWebTests.Tests.Common
         [Test]
         public void SetAttributeTest()
         {
-            string attributeName = "testAttr";
-            string value = "testValue";
+            var attributeName = "testAttr";
+            var value = "testValue";
             _textItem.SetAttribute(attributeName, value);
             CheckText(() => _textItem.GetAttribute(attributeName), value);
         }

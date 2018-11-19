@@ -58,7 +58,7 @@ namespace JDI_UIWebTests.Tests.Composite
         public void SubmitStringTest()
         {
             _contactForm.Submit(Contact.DEFAULT_CONTACT.FirstName);
-            string s = string.Format("Summary: 3\r\nName: {0}",
+            var s = string.Format("Summary: 3\r\nName: {0}",
                          Contact.DEFAULT_CONTACT.FirstName);
             CheckResult(s);
         }

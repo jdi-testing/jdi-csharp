@@ -1,11 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Epam.JDI.Core.Settings.JDISettings;
 using static JDI_UIWebTests.UIObjects.TestSite;
 
@@ -14,13 +10,13 @@ namespace JDI_ImageToWebElement.Tests
     
     public class GetElementByImage
     {
-        private string imagesPath = Path.GetDirectoryName(typeof(GetElementByImage).Assembly.Location) + "\\Images\\";
+        private string _imagesPath = Path.GetDirectoryName(typeof(GetElementByImage).Assembly.Location) + "\\Images\\";
         [Test]
         public void GetCalculateButtonLocators()
         {
             Logger.Info("Try to get calculate button locators");
             var locators = 
-                ImagePattnerSerach.GetElementLocatorsByElementImage(MetalsColorsPage.WebDriver, imagesPath + "calculate.png");
+                ImagePattnerSerach.GetElementLocatorsByElementImage(MetalsColorsPage.WebDriver, _imagesPath + "calculate.png");
 
             foreach(var locator in locators)
             {
@@ -30,7 +26,7 @@ namespace JDI_ImageToWebElement.Tests
                 {
                     Logger.Info("Element attribute locator key: " + item.Key + " value " + item.Value);
                 }
-                IWebElement element = MetalsColorsPage.WebDriver.FindElement(By.CssSelector(locator.CssLocator));
+                var element = MetalsColorsPage.WebDriver.FindElement(By.CssSelector(locator.CssLocator));
                 Assert.IsTrue(MetalsColorsPage.CalculateButton.WebElement.Text == element.Text);
 
                 Assert.IsTrue(MetalsColorsPage.CalculateButton.WebElement.Text == MetalsColorsPage.WebDriver.FindElement(By.XPath(locator.XPathLocator)).Text);
@@ -48,7 +44,7 @@ namespace JDI_ImageToWebElement.Tests
         {
             Logger.Info("Try to get calculate button locators");
             var locators =
-                ImagePattnerSerach.GetElementLocatorsByElementImage(MetalsColorsPage.WebDriver, imagesPath + "checkbox.png");
+                ImagePattnerSerach.GetElementLocatorsByElementImage(MetalsColorsPage.WebDriver, _imagesPath + "checkbox.png");
 
             foreach (var locator in locators)
             {
@@ -61,7 +57,7 @@ namespace JDI_ImageToWebElement.Tests
 
                 if(locator.WebElement.Text == "Water")
                 {
-                    IWebElement element = MetalsColorsPage.WebDriver.FindElement(By.CssSelector(locator.CssLocator));
+                    var element = MetalsColorsPage.WebDriver.FindElement(By.CssSelector(locator.CssLocator));
                     Assert.IsTrue(MetalsColorsPage.CbWater.WebElement.Text == element.Text);
 
                     Assert.IsTrue(MetalsColorsPage.CbWater.WebElement.Text == MetalsColorsPage.WebDriver.FindElement(By.XPath(locator.XPathLocator)).Text);

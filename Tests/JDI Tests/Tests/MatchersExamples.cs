@@ -33,10 +33,10 @@ namespace JDI_Tests.Tests
             // TODO: Add failMessage parameter for each method
             Assert.Each(new[] {"IPhone 4", "IPhone 6", "IPhone 5S"}).AreDifferent();
 
-            List<string> sameList = new List<string> {"test", "test", "tesT"};
+            var sameList = new List<string> {"test", "test", "tesT"};
             Assert.IgnoreCase().Each(sameList).AreSame();
 
-            List<int> sortedListAsc = new List<int> {1, 2, 3};
+            var sortedListAsc = new List<int> {1, 2, 3};
             Assert.IsSortedByAsc(sortedListAsc);
 
             int[] sortedArrayDesc = {8, 7, 6};
@@ -47,7 +47,7 @@ namespace JDI_Tests.Tests
         public void WaitAssertExample()
         {
             string[] searchResults = {"IPhone 4", "IPhone 5S", "IPhone 6", "IPhone 7"};
-            int i = 0;
+            var i = 0;
             Func<string> getNextFunc = () =>
             {
                 if (i == searchResults.Length) i = 0;
@@ -66,7 +66,7 @@ namespace JDI_Tests.Tests
             Assert.ThrowException(() => { throw new ArgumentException("Test exception"); }, typeof (ArgumentException), "Test exception");
             Assert.HasNoException(() =>
             {
-                int i = 10;
+                var i = 10;
                 i++;
             });
         }

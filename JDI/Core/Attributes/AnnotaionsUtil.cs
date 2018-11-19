@@ -29,7 +29,7 @@ namespace Epam.JDI.Core.Attributes
         private static String SplitCamelCase(String camel)
         {
             var result = camel.ToUpper().First().ToString();
-            for (int i = 1; i < camel.Length - 1; i++)
+            for (var i = 1; i < camel.Length - 1; i++)
                 result += (IsCapital(camel[i]) && !IsCapital(camel[i - 1]) ? " " : "") + camel[i];
             return result + camel[camel.Length - 1];
         }

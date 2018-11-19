@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JDI_Web.Selenium.DriverManager
 {
@@ -18,11 +13,11 @@ namespace JDI_Web.Selenium.DriverManager
         /// <returns>True - if versions are equals, else false</returns>
         public static bool CheckDriverVersionFromExe(string path, string version)
         {
-            bool result = false;
+            var result = false;
 
             if (File.Exists(path))
             {
-                string exeContent = File.ReadAllText(path);
+                var exeContent = File.ReadAllText(path);
                 if (exeContent.Contains(version))
                     result = true;
             }
@@ -37,7 +32,7 @@ namespace JDI_Web.Selenium.DriverManager
         /// <returns>True - if versions are equals, else false</returns>
         public static bool CheckDriverVerionFormExeAttributes(string path, string version)
         {
-            bool result = false;
+            var result = false;
             if (File.Exists(path))
             {
                 var versionInfo = FileVersionInfo.GetVersionInfo(path);

@@ -74,7 +74,7 @@ namespace JDI_UIWebTests.Tests.Common
                 _checkBoxWater.Click();
             }
             _checkBoxWater.Value = value;
-            string resultMsg = "Water: condition changed to " + expected.ToString().ToLower();
+            var resultMsg = "Water: condition changed to " + expected.ToString().ToLower();
             CheckAction(resultMsg);
         }
 

@@ -8,7 +8,6 @@ using Epam.JDI.Core.Interfaces.Complex;
 using Epam.JDI.Core.Interfaces.Settings;
 using Epam.JDI.Core.Logging;
 using Epam.JDI.Core.Settings;
-using JDI_Matchers;
 using JDI_Web.Selenium.Base;
 using JDI_Web.Selenium.DriverFactory;
 using JDI_Web.Selenium.Elements.Base;
@@ -32,6 +31,7 @@ namespace JDI_Web.Settings
         public static bool HasDomain => Domain != null && Domain.Contains("://");
         public static IWebDriver WebDriver => WebDriverFactory.GetDriver();
         private static WebDriverFactory _webDriverFactory;
+        public static bool initialized;
 
         public static WebDriverFactory WebDriverFactory => _webDriverFactory ?? (_webDriverFactory = new WebDriverFactory());
 
@@ -47,7 +47,7 @@ namespace JDI_Web.Settings
 
         public static IJavaScriptExecutor JSExecutor => DriverFactory.GetDriver() as IJavaScriptExecutor;
 
-        public static void Init(ILogger logger = null, IAssert assert = null,
+        public static void Init(ILogger logger = null, IAssert assert = null, 
             TimeoutSettings timeouts = null, IDriver<IWebDriver> driverFactory = null)
         {
             DriverFactory = driverFactory ?? new WebDriverFactory();
@@ -70,6 +70,7 @@ namespace JDI_Web.Settings
         public static void InitFromProperties(ILogger logger = null, IAssert assert = null,
             TimeoutSettings timeouts = null, IDriver<IWebDriver> driverFactory = null)
         {
+            if (initialized) return;
             Init(logger, assert, timeouts, driverFactory);
             JDISettings.InitFromProperties();
             FillFromSettings(p => Domain = p, "Domain");
@@ -108,6 +109,7 @@ namespace JDI_Web.Settings
                 if (split != null)
                     BrowserSize = new Size(Parse(split[0]), Parse(split[1]));
             }, "BrowserSize");
+            initialized = true;
         }
 
         private static readonly Dictionary<Type, Type> DefaultInterfacesMap = new Dictionary<Type, Type>

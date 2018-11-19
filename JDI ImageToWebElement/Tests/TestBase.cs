@@ -5,11 +5,6 @@ using JDI_Web.Selenium.DriverFactory;
 using JDI_Web.Selenium.Elements.Composite;
 using JDI_Web.Settings;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static JDI_UIWebTests.UIObjects.TestSite;
 
 namespace JDI_ImageToWebElement.Tests

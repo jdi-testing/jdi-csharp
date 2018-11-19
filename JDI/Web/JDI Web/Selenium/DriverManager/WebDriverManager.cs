@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebDriverManager.DriverConfigs.Impl;
 using WebDriverManager.Helpers;
 using Manager = WebDriverManager;
@@ -21,9 +17,9 @@ namespace JDI_Web.Selenium.DriverManager
         /// <returns>True - drivers version is same, else false</returns>
         public static bool IsLocalVersionLatestVersion(DriverFactory.DriverTypes type, string executingPath, string version = "")
         {
-            bool result = false;
-            string latestVersion = version == "" ? GetLatestVersionNumber(type) : version;
-            string driverBinaryName = "";
+            var result = false;
+            var latestVersion = version == "" ? GetLatestVersionNumber(type) : version;
+            var driverBinaryName = "";
             switch (type)
             {
                 case DriverFactory.DriverTypes.Chrome:
@@ -51,7 +47,7 @@ namespace JDI_Web.Selenium.DriverManager
         /// <returns>Version number</returns>
         private static string GetLatestVersionNumber(DriverFactory.DriverTypes type)
         {
-            string latestVersion = "";
+            var latestVersion = "";
             switch (type)
             {
                 case DriverFactory.DriverTypes.Chrome:
@@ -77,28 +73,28 @@ namespace JDI_Web.Selenium.DriverManager
         /// <returns>Path of driver location</returns>
         private static string GetDriverVersion(DriverFactory.DriverTypes type, string version = "")
         {
-            string driverFullPath = "";
-            string executingPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
-            string binaryName = "";
-            string url = "";
-            string latestVersionNumber = version == "" ? GetLatestVersionNumber(type) : version;
-            Architecture currnetArchitecture = ArchitectureHelper.GetArchitecture();
+            var driverFullPath = "";
+            var executingPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            var binaryName = "";
+            var url = "";
+            var latestVersionNumber = version == "" ? GetLatestVersionNumber(type) : version;
+            var currnetArchitecture = ArchitectureHelper.GetArchitecture();
             switch (type)
             {
                 case DriverFactory.DriverTypes.Chrome:
-                    ChromeConfig cConfig = new ChromeConfig();
+                    var cConfig = new ChromeConfig();
                     binaryName = cConfig.GetBinaryName();
                     url = currnetArchitecture == Architecture.X32 ? cConfig.GetUrl32() : cConfig.GetUrl64();
                     url = UrlHelper.BuildUrl(url, latestVersionNumber);
                     break;
                 case DriverFactory.DriverTypes.Firefox:
-                    FirefoxConfig fConfig = new FirefoxConfig();
+                    var fConfig = new FirefoxConfig();
                     binaryName = fConfig.GetBinaryName();
                     url = currnetArchitecture == Architecture.X32 ? fConfig.GetUrl32() : fConfig.GetUrl64();
                     url = UrlHelper.BuildUrl(url, latestVersionNumber);
                     break;
                 case DriverFactory.DriverTypes.IE:
-                    InternetExplorerConfig ieConfig = new InternetExplorerConfig();
+                    var ieConfig = new InternetExplorerConfig();
                     binaryName = ieConfig.GetBinaryName();
                     url = currnetArchitecture == Architecture.X32 ? ieConfig.GetUrl32() : ieConfig.GetUrl64();    
                     url = UrlHelper.BuildUrl(url, latestVersionNumber);
@@ -106,7 +102,7 @@ namespace JDI_Web.Selenium.DriverManager
                 default:
                     break;
             }
-            string driverLocationPath = version == "" ? Path.Combine(executingPath, type.ToString()) 
+            var driverLocationPath = version == "" ? Path.Combine(executingPath, type.ToString()) 
                                                       : Path.Combine(Path.Combine(executingPath, type.ToString()), version);
             driverFullPath = Path.Combine(driverLocationPath, binaryName);
 

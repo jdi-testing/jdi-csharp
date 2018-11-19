@@ -4,11 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace JDI_ImageToWebElement
 {
@@ -56,12 +52,12 @@ namespace JDI_ImageToWebElement
         /// <returns>Список координат</returns>
         private static List<Point> Execute(string mainPattern, float similarity, int timeout)
         {
-            Command command = Command.FIND_ALL;
+            var command = Command.FIND_ALL;
             List<Point> points;
             object[] directoryName;
             ProcessStartInfo psi = null;
-            string output = "";
-            string error = "";
+            var output = "";
+            var error = "";
 
             directoryName = new object[] { "-jar \"", Path.GetDirectoryName(typeof(ImagePattnerSerach).Assembly.Location)
                 , "\\JSikuliModule.jar\" \"",mainPattern, "\" \"", command.ToString(), "\" ", similarity, " ", timeout };
@@ -72,10 +68,10 @@ namespace JDI_ImageToWebElement
             psi.RedirectStandardError = true;
             psi.UseShellExecute = false;
             psi.CreateNoWindow = true;
-            Process process = Process.Start(psi);
+            var process = Process.Start(psi);
             process.WaitForExit();
 
-            StreamReader srProcessOutput = process.StandardOutput;
+            var srProcessOutput = process.StandardOutput;
             try { output = srProcessOutput.ReadToEnd(); }
             finally
             {
@@ -83,7 +79,7 @@ namespace JDI_ImageToWebElement
                     ((IDisposable)srProcessOutput).Dispose();
             }
 
-            StreamReader srProcessError = process.StandardError;
+            var srProcessError = process.StandardError;
             try { error = srProcessError.ReadToEnd(); }
             finally
             {
@@ -104,21 +100,21 @@ namespace JDI_ImageToWebElement
         /// <returns>Список координат</returns>
         private static List<Point> PrepareCoordinates(string rawCoordinates)
         {
-            List<Point> points = new List<Point>();
-            string[] strArrays = Regex.Split(rawCoordinates, Environment.NewLine);
-            for (int i = 0; i < (int)strArrays.Length; i++)
+            var points = new List<Point>();
+            var strArrays = Regex.Split(rawCoordinates, Environment.NewLine);
+            for (var i = 0; i < (int)strArrays.Length; i++)
             {
-                string point = strArrays[i];
+                var point = strArrays[i];
                 if ((string.IsNullOrEmpty(point) ? false : !string.IsNullOrWhiteSpace(point)))
                 {
-                    string rawCoord = point.Substring(rawCoordinates.IndexOf("###") + "###".Length);
+                    var rawCoord = point.Substring(rawCoordinates.IndexOf("###") + "###".Length);
                     rawCoord = rawCoord.Trim().Replace("(", "").Replace(")", "");
                     if (!Regex.Match(rawCoord, "[0-9];[0-9]", RegexOptions.IgnoreCase).Success)
                     {
                         //goto Label0;
                         continue;
                     }
-                    string[] coordinates = rawCoord.Split(new char[] { ';' });
+                    var coordinates = rawCoord.Split(new char[] { ';' });
                     if ((int)coordinates.Length != 2)
                     {
                         throw new Exception(string.Concat("Controls coordinates can not be determined: ", rawCoordinates));
@@ -141,17 +137,17 @@ namespace JDI_ImageToWebElement
         /// <returns></returns>
         public static List<ImageElementLocators> GetElementLocatorsByElementImage(IWebDriver driver, string patternFile, float similarity = 0.85f, int timeout = 10000)
         {
-            List<ImageElementLocators> ielList = new List<ImageElementLocators>();
+            var ielList = new List<ImageElementLocators>();
             webDriver = driver;
-            List<Point> points = Execute(patternFile, similarity, timeout);
-            Size imgSize = GetImageSise(patternFile);
-            int WindowOffsetfromScreen = GetScreeWindowOffset();
+            var points = Execute(patternFile, similarity, timeout);
+            var imgSize = GetImageSise(patternFile);
+            var WindowOffsetfromScreen = GetScreeWindowOffset();
 
-            foreach (Point point in points)
+            foreach (var point in points)
             {
-                Point actualPointToFind = new Point(
+                var actualPointToFind = new Point(
                     point.X - imgSize.Width / 2 + 4, point.Y - imgSize.Height / 2 - WindowOffsetfromScreen + 4);
-                IWebElement element = GetElementFromPointJS(actualPointToFind);
+                var element = GetElementFromPointJS(actualPointToFind);
 
                 var attrs = GetElementAttributesJS(element);
                 var xPath = GetElementXPathJS(element);
@@ -209,7 +205,7 @@ namespace JDI_ImageToWebElement
         /// <returns>Словарь атрибутов</returns>
         private static Dictionary<string, string> GetElementAttributesJS(IWebElement webElement)
         {
-            Dictionary<string, string> result = new Dictionary<string, string>();
+            var result = new Dictionary<string, string>();
             var attributes = ((IJavaScriptExecutor)webDriver).ExecuteScript(
                 @"var items = {}; 
                 for (index = 0; index < arguments[0].attributes.length; ++index) 
@@ -235,7 +231,7 @@ namespace JDI_ImageToWebElement
         /// <returns>Строка с хPath при успешном формировании, иначе ""</returns>
         private static string GetElementXPathJS(IWebElement element)
         {
-            string result = "";
+            var result = "";
             var jsResult = ((IJavaScriptExecutor)webDriver).ExecuteScript(@"
                 return getElementXPath(arguments[0]);
                 function getElementXPath(element)

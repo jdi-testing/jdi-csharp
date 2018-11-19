@@ -56,7 +56,7 @@ namespace JDI_UIWebTests.Tests.Composite
         {
             HomePage.WebDriver.Manage().Cookies.DeleteAllCookies();
             new Check().IsTrue(HomePage.WebDriver.Manage().Cookies.AllCookies.Count == 0);                                 
-            Cookie cookie = new Cookie("key", "value");
+            var cookie = new Cookie("key", "value");
             ContactFormPage.AddCookie(cookie);
             new Check().AreEquals(HomePage.WebDriver.Manage().Cookies.GetCookieNamed(cookie.Name).Value, cookie.Value);            
         }
@@ -66,7 +66,7 @@ namespace JDI_UIWebTests.Tests.Composite
         [Test]
         public void ClearCacheTest()
         {
-            Cookie cookie = new Cookie("key", "value");
+            var cookie = new Cookie("key", "value");
             HomePage.WebDriver.Manage().Cookies.AddCookie(cookie);
             new Check().IsFalse(HomePage.WebDriver.Manage().Cookies.AllCookies.Count == 0);            
             ContactFormPage.ClearCache();
@@ -82,7 +82,7 @@ namespace JDI_UIWebTests.Tests.Composite
         [TearDown]
         public void TearDown()
         {
-            Cookie loginCookie = new Cookie("authUser", "true", "jdi-framework.github.io", "/", null);            
+            var loginCookie = new Cookie("authUser", "true", "jdi-framework.github.io", "/", null);            
             HomePage.WebDriver.Manage().Cookies.AddCookie(loginCookie);
         }       
 

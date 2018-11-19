@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Epam.JDI.Core.Attributes.Functions;
 using Epam.JDI.Core.Interfaces.Complex;
-using RestSharp.Extensions;
+using JDI_Commons;
 
 namespace JDI_Web.Selenium.Elements.Composite
 {

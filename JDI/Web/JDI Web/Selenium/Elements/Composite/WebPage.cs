@@ -6,7 +6,6 @@ using JDI_Commons;
 using JDI_Web.Selenium.Base;
 using JDI_Web.Settings;
 using OpenQA.Selenium;
-using RestSharp.Extensions;
 using static System.String;
 using static Epam.JDI.Core.ExceptionUtils;
 using static Epam.JDI.Core.Settings.JDISettings;

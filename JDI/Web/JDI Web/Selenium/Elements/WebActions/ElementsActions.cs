@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using JDI_Commons;
 using JDI_Web.Selenium.Base;
-using RestSharp.Extensions;
 using static System.String;
 using static Epam.JDI.Core.Settings.JDISettings;
-using JDI_Web.Selenium.Elements.Composite;
 
 namespace JDI_Web.Selenium.Elements.WebActions
 {
