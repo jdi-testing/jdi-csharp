@@ -48,6 +48,11 @@ namespace JDI_Commons
             return result;
         }
 
+        public static List<PropertyInfo> GetProperties(this object obj, params Type[] types)
+        {
+            return obj.GetType().GetProperties().ToList();
+        }
+
         public static List<FieldInfo> GetFields(this object obj, params Type[] types)
         {
             return GetFields(obj, types, typeof(object));

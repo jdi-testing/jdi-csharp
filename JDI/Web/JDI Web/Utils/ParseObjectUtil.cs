@@ -68,6 +68,21 @@ namespace JDI_Web.Utils
                 if (strValue != null)
                     result.Add($"{NameAttribute.GetElementName(field)}#:#{strValue}");
             });
+            obj.GetProperties().ForEach(prop =>
+            {
+                var value = prop.GetValue(obj);
+                string strValue = null;
+                if (value == null)
+                    strValue = "#NULL#";
+                else if (value is string s)
+                    strValue = s;
+                else if (value is IConvertible)
+                    strValue = value.ToString();
+                else if (ComplexAttribute.IsPresent(prop))
+                    strValue = "#(#" + PrintObject(value) + "#)#";
+                if (strValue != null)
+                    result.Add($"{NameAttribute.GetElementName(prop)}#:#{strValue}");
+            });
             return result.Print("#;#");
         }
 

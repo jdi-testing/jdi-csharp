@@ -2,6 +2,7 @@
 using JDI_Tests.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static JDI_Tests.Epam_UIObjects.EpamSite;
+using static JDI_Tests.Epam_UIObjects.Pages.CareerPage;
 
 namespace JDI_Tests.Tests.Epam
 {

@@ -5,7 +5,6 @@ using JDI_Web.Selenium.DriverFactory;
 using JDI_Web.Selenium.Elements.Composite;
 using JDI_Web.Settings;
 using NUnit.Framework;
-using OpenQA.Selenium;
 
 namespace JDI_Tests.Tests.Epam
 {

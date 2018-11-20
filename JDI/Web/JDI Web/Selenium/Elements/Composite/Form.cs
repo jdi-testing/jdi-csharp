@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using JDI_Commons;
 using Epam.JDI.Core.Attributes;
 using Epam.JDI.Core.Interfaces.Base;
@@ -34,6 +35,7 @@ namespace JDI_Web.Selenium.Elements.Composite
                 DoActionRule(fieldValue, val => SetFieldValueAction(this, val, setValueElement));
             });
         }
+
         public void Submit(Dictionary<string, string> objStrings)
         {
             Fill(objStrings);
@@ -139,12 +141,77 @@ namespace JDI_Web.Selenium.Elements.Composite
 
         public void Fill(T entity)
         {
-            Fill(entity.ToSetValue());
+            this.GetFields(typeof(ISetValue)).ForEach(element =>
+            {
+                var field = entity.GetType().GetFields().FirstOrDefault(f =>
+                    GetElementClass.NamesEqual(NameAttribute.GetElementName(f), NameAttribute.GetElementName(element)));
+                var strValue = GetFieldValue(field, entity);
+                if (strValue == null)
+                {
+                    var prop = entity.GetType().GetProperties().FirstOrDefault(f =>
+                        GetElementClass.NamesEqual(NameAttribute.GetElementName(f), NameAttribute.GetElementName(element)));
+                    strValue = GetPropertyValue(prop, entity);
+                }
+                if (strValue == null) return;
+                var setValueElement = (ISetValue)element.GetValue(this);
+                DoActionRule(strValue, val => SetFieldValueAction(this, val, setValueElement));
+            });
+        }
+
+        private string GetFieldValue(FieldInfo field, T entity)
+        {
+            if (field == null) return null;
+            var fieldValue = field.GetValue(entity);
+            if (fieldValue == null) return null;
+            string strValue = null;
+            if (fieldValue is string s)
+                strValue = s;
+            return strValue;
+        }
+        private string GetPropertyValue(PropertyInfo prop, T entity)
+        {
+            if (prop == null) return null;
+            var propValue = prop.GetValue(entity);
+            if (propValue == null) return null;
+            string strValue = null;
+            if (propValue is string s)
+                strValue = s;
+            return strValue;
         }
 
         public IList<string> Verify(T entity)
         {
-            return Verify(entity.ToSetValue());
+            var compareFalse = new List<string>();
+            this.GetFields(typeof(IHasValue)).ForEach(element =>
+            {
+                var name = "";
+                var field = entity.GetType().GetFields().FirstOrDefault(f =>
+                    GetElementClass.NamesEqual(NameAttribute.GetElementName(f), NameAttribute.GetElementName(element)));
+                var strValue = GetFieldValue(field, entity);
+                if (strValue == null)
+                {
+                    var prop = entity.GetType().GetProperties().FirstOrDefault(f =>
+                        GetElementClass.NamesEqual(NameAttribute.GetElementName(f), NameAttribute.GetElementName(element)));
+                    if (prop != null) { 
+                        strValue = GetPropertyValue(prop, entity);
+                        name = prop.Name;
+                    }
+                }
+                else
+                {
+                    if (field != null)
+                        name = field.Name;
+                }
+
+                if (strValue == null) return;
+                var valueField = (IHasValue)element.GetValue(this);
+                DoActionRule(strValue, expected => {
+                    var actual = GetFieldValueAction(this, valueField).Trim();
+                    if (actual.Equals(expected)) return;
+                    compareFalse.Add($"Field '{name}' (Actual: '{actual}' <> Expected: '{expected}')");
+                });
+            });
+            return compareFalse;
         }
 
         public void Search(T entity)
@@ -154,7 +221,7 @@ namespace JDI_Web.Selenium.Elements.Composite
 
         public void Submit(T entity, string buttonName)
         {
-            Fill(entity.ToSetValue());
+            Fill(entity);
             GetElementClass.GetButton(buttonName).Click();
         }
 
@@ -215,13 +282,15 @@ namespace JDI_Web.Selenium.Elements.Composite
 
         public void Submit(T entity, Enum buttonName)
         {
-            Fill(entity.ToSetValue());
+            Fill(entity);
             GetElementClass.GetButton(buttonName.ToString().ToLower()).Click();
         }
 
         public void Check(T entity)
         {
-            Check(entity.ToSetValue());
+            var result = Verify(entity);
+            if (result.Count > 0)
+                throw Exception("Check form failed:" + result.Print("".FromNewLine()).FromNewLine());
         }
     }
 }

@@ -18,7 +18,10 @@ namespace Epam.JDI.Core.Base
 
         public void InitElements(object parent, string driverName)
         {
-            SetFieldsForInit(parent, parent.GetFields(Decorators, StopTypes), parent.GetType(), driverName);
+            var allFields = parent.GetFields(Decorators, StopTypes);
+            var staticFields = parent.GetType().StaticFields().GetFields(Decorators);
+            allFields.AddRange(staticFields);
+            SetFieldsForInit(parent, allFields, parent.GetType(), driverName);
         }
 
         public void InitStaticPages(Type parentType, string driverName)
@@ -46,8 +49,7 @@ namespace Epam.JDI.Core.Base
 
         protected IBaseElement GetInstancePage(object parent, FieldInfo field, Type type, Type parentType)
         {
-            var instance = (IBaseElement) (field.GetValue(parent)
-                                           ?? Activator.CreateInstance(type));
+            var instance = (IBaseElement) (field.GetValue(parent) ?? Activator.CreateInstance(type));
             FillPageFromAnnotation(field, instance, parentType);
             return instance;
         }

@@ -29,6 +29,11 @@ namespace Epam.JDI.Core.Attributes
             var name = GetName(field);
             return string.IsNullOrEmpty(name) ? SplitCamelCase(field.Name) : name;
         }
+        public static string GetElementName(PropertyInfo prop)
+        {
+            var name = GetName(prop);
+            return string.IsNullOrEmpty(name) ? SplitCamelCase(prop.Name) : name;
+        }
 
         private static string SplitCamelCase(string camel)
         {
