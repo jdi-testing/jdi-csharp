@@ -63,8 +63,7 @@ namespace JDI_Web.Selenium.Base
             if (frameBy != null)
                 element.WebAvatar.FrameLocator = frameBy;
             By template;
-            var form = element.Parent as Form;
-            if (form != null && !element.HasLocator
+            if (element.Parent is Form form && !element.HasLocator
                 && (template = form.LocatorTemplate) != null)
                 element.WebAvatar.ByLocator = template.FillByTemplate(field.Name);
             return element;

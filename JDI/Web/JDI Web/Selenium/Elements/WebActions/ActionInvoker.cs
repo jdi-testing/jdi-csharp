@@ -25,7 +25,20 @@ namespace JDI_Web.Selenium.Elements.WebActions
             return ActionWithException(() =>
             {
                 ProcessDemoMode();
-                return ActionScenrios.SetElement(_element).ResultScenario(actionName, action, logResult, level);
+                return (TResult) ActionScenarios.ResultScenario(_element, actionName,
+                    element =>
+                    {
+                        var result =
+                            ActionWithException(() => new Timer(JDISettings.Timeouts.CurrentTimeoutSec)
+                                    .GetResultByCondition(() => action.Invoke(element), res => true),
+                                ex => $"Do action {actionName} failed. Can't got result. Reason: {ex}");
+                        if (result == null)
+                            throw JDISettings.Exception($"Do action {actionName} failed. Can't got result");
+                        return logResult == null
+                            ? result.ToString()
+                            : logResult.Invoke(result);
+                    },
+                    level);
             }, ex => $"Failed to do '{actionName}' action. Reason: {ex}");
         }
         
@@ -33,15 +46,15 @@ namespace JDI_Web.Selenium.Elements.WebActions
         {
             TimerExtensions.ForceDone(() => {
                 ProcessDemoMode();
-                ActionScenrios.SetElement(_element).ActionScenario(actionName, action, level);
+                ActionScenarios.ActionScenario(_element, actionName, action, level);
             });
         }
 
         public void ProcessDemoMode()
         {
             if (!JDISettings.IsDemoMode) return;
-            if (_element is WebElement)
-                ((WebElement)_element).Highlight(JDISettings.HighlightSettings);
+            if (_element is WebElement element)
+                element.Highlight(JDISettings.HighlightSettings);
         }
     }
 }

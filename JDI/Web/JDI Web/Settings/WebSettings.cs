@@ -31,6 +31,8 @@ namespace JDI_Web.Settings
         public static bool HasDomain => Domain != null && Domain.Contains("://");
         public static IWebDriver WebDriver => WebDriverFactory.GetDriver();
         private static WebDriverFactory _webDriverFactory;
+
+        public static Func<WebBaseElement, IWebElement> SMART_SEARCH = el => el.WebDriver.FindElement(By.Id(el.Name));
         public static bool initialized;
 
         public static WebDriverFactory WebDriverFactory => _webDriverFactory ?? (_webDriverFactory = new WebDriverFactory());

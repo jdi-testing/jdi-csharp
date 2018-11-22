@@ -18,11 +18,11 @@ namespace JDI_Web.Selenium.Elements.Composite
 
         public static void Init(Type siteType, string domain = null, Func<IWebDriver> driver = null)
         {
+            InitFromProperties();
             if (driver != null)
                 UseDriver(driver);
             if (domain != null)
                 Domain = domain;
-            InitFromProperties();
             CascadeInit.InitStaticPages(siteType, WebSettings.WebDriverFactory.CurrentDriverName);
             CurrentSite = siteType;
         }

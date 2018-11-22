@@ -8,7 +8,7 @@ namespace JDI_UIWebTests.Tests.Common
 {
     public class ButtonTests
     {
-        private IButton _button = MetalsColorsPage.CalculateButton;
+        private readonly IButton _button = MetalsColorsPage.CalculateButton;
 
         [SetUp]
         public void SetUp()

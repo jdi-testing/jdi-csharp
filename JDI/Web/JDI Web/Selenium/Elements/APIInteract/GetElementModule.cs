@@ -10,6 +10,7 @@ using JDI_Web.Settings;
 using OpenQA.Selenium;
 using static System.String;
 using static Epam.JDI.Core.Settings.JDISettings;
+using static JDI_Web.Settings.WebSettings;
 using WebDriverFactory = JDI_Web.Selenium.DriverFactory.WebDriverFactory;
 
 namespace JDI_Web.Selenium.Elements.APIInteract
@@ -99,6 +100,8 @@ namespace JDI_Web.Selenium.Elements.APIInteract
         {
             if (_webElement != null)
                 return _webElement;
+            if (!HasLocator)
+                return Timer.GetResult(() => SMART_SEARCH.Invoke(Element));
             var timeout = Timeouts.CurrentTimeoutSec;
             var result = GetWebElemetsAction();
             switch (result.Count)
