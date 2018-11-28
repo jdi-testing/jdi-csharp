@@ -84,7 +84,7 @@ namespace JDI_Web.Selenium.Base
         protected GetElementClass GetElementClass;
         public ElementsActions Actions;
         private string _varName;
-        private string VarName => _varName ?? Name;
+        protected string VarName => _varName ?? Name;
         private string _typeName;
 
         public string TypeName
@@ -168,7 +168,7 @@ namespace JDI_Web.Selenium.Base
             LogAction(actionName, Info);
         }
 
-        public new string ToString()
+        public override string ToString()
         {
             return ShortLogMessagesFormat
                 ? $"{TypeName} '{Name}' ({ParentTypeName}.{VarName}; {Avatar})"

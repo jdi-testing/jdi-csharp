@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Epam.JDI.Core.Interfaces.Complex;
+using Epam.JDI.Core.Logging;
 using JDI_Commons;
 using JDI_Web.Selenium.Base;
 using JDI_Web.Settings;
@@ -215,6 +216,12 @@ namespace JDI_Web.Selenium.Elements.Composite
         {
             Invoker.DoJAction("Go forward to next page",
                 el => WebDriver.Manage().Cookies.DeleteAllCookies());
+        }
+        public override string ToString()
+        {
+            return ShortLogMessagesFormat
+                ? $"{TypeName} '{Name}' ({ParentTypeName}.{VarName})"
+                : $"Name: '{Name}', Type: '{TypeName}' In: '{ParentTypeName}'";
         }
 
         public class StringCheckType
