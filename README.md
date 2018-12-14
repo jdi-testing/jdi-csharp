@@ -1,4 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/t8yolupp5oldpdh6?svg=true)](https://ci.appveyor.com/project/elv1s42/jdi-csharp)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2e0df000756c4061aa41be3446d58586)](https://www.codacy.com/app/42_/jdi-csharp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jdi-testing/jdi-csharp&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/jdi-testing/jdi-csharp/badge/master)](https://www.codefactor.io/repository/github/jdi-testing/jdi-csharp/overview/master)
 
 # JDI UI Test Automation Framework
